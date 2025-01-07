@@ -2,6 +2,8 @@ package server.command;
 
 import server.data.InMemoryData;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Map;
 
 public class SetCommand implements Command {
@@ -20,6 +22,14 @@ public class SetCommand implements Command {
         Integer key = Integer.parseInt(idx);
         data.put(key, text);
         System.out.println("OK");
+        return true;
+    }
+
+    @Override
+    public boolean execute(DataOutputStream outputStream) throws IOException {
+        Integer key = Integer.parseInt(idx);
+        data.put(key, text);
+        outputStream.writeUTF("OK");
         return true;
     }
 }

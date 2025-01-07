@@ -2,6 +2,8 @@ package server.command;
 
 import server.data.InMemoryData;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Map;
 
 public class DeleteCommand implements Command {
@@ -17,6 +19,14 @@ public class DeleteCommand implements Command {
         var key = Integer.parseInt(this.idx);
         data.put(key, "");
         System.out.println("OK");
+        return true;
+    }
+
+    @Override
+    public boolean execute(DataOutputStream outputStream) throws IOException {
+        var key = Integer.parseInt(this.idx);
+        data.put(key, "");
+        outputStream.writeUTF("OK");
         return true;
     }
 }

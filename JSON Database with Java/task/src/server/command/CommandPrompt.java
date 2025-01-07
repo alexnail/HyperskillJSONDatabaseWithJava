@@ -1,14 +1,24 @@
 package server.command;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.Scanner;
 
 public class CommandPrompt {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final ServerSocket serverSocket;
 
-    public Command command() {
-        var line = scanner.nextLine();
+    public CommandPrompt(ServerSocket serverSocket) {
+        this.serverSocket = serverSocket;
+    }
 
-        return CommandFactory.getCommand(line);
+    public boolean getAndExecute() throws IOException {
+        return CommandFactory.getAndExecuteCommand(serverSocket);
+    }
+
+    public Command command(){
+        try (Scanner scanner = new Scanner(System.in)) {
+            return CommandFactory.getCommand(scanner.nextLine());
+        }
     }
 }
