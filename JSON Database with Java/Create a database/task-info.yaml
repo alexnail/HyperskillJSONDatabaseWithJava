@@ -36,9 +36,9 @@ files:
   - name: src/server/data/InMemoryData.java
     visible: true
     learner_created: true
-feedback_link: https://hyperskill.org/projects/65/stages/348/implement#comment
+feedback_link: https://hyperskill.org/learn/step/5490#comment
 status: Solved
 feedback:
   message: Congratulations!
   time: "Sun, 05 Jan 2025 16:12:09 UTC"
-record: -1
+record: 1
