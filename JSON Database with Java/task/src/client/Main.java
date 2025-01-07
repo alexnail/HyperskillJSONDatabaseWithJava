@@ -2,12 +2,12 @@ package client;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.google.gson.Gson;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Objects;
 
 public class Main {
     private static final String ADDRESS = "127.0.0.1";
@@ -34,27 +34,20 @@ public class Main {
         try (Socket socket = new Socket(ADDRESS, SERVER_PORT);
              DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
              DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());) {
-            var output = buildOutput();
-            dataOutputStream.writeUTF(output.toString());
+            var output = buildRequest();
+            dataOutputStream.writeUTF(output);
             System.out.println("Sent: " + output);
-            var input = dataInputStream.readUTF();
-            System.out.println("Received: " + input);
+            var response = dataInputStream.readUTF();
+            System.out.println("Received: " + response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private StringBuilder buildOutput() {
-        var sb = new StringBuilder();
-        if (Objects.nonNull(type)) {
-            sb.append(type);
-        }
-        if (Objects.nonNull(index)) {
-            sb.append(" ").append(index);
-        }
-        if (Objects.nonNull(message)) {
-            sb.append(" ").append(message);
-        }
-        return sb;
+    private String buildRequest() {
+        return new Gson().toJson(new Request(type, index, message));
+    }
+
+    record Request(String type, int key, String value) {
     }
 }
