@@ -1,26 +1,26 @@
 package server.command;
 
-import server.data.InMemoryData;
+import server.data.Response;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
-public class GetCommand implements Command {
+public class GetCommand extends DataAwareCommand {
 
-    private final String idx;
+    private final String key;
 
-    private final Map<Integer, String> data = InMemoryData.getData();
-
-    public GetCommand(String idx) {
-        this.idx = idx;
+    public GetCommand(DataOutputStream outputStream, String key) {
+        super(outputStream);
+        this.key = key;
     }
 
     @Override
-    public boolean execute(DataOutputStream outputStream) throws IOException {
-        var key = Integer.parseInt(this.idx);
-        var data = this.data.get(key);
-        outputStream.writeUTF(data == null || data.isEmpty() ? "ERROR" : data);
+    public boolean execute() throws IOException {
+        var value = data.get(key);
+        Response response = value == null || value.isEmpty()
+                ? Response.error("No such key")
+                : Response.ok(value);
+        outputStream.writeUTF(gson.toJson(response));
         return true;
     }
 }

@@ -15,10 +15,10 @@ public class Main {
 
     @Parameter(names = "-t")
     private String type;
-    @Parameter(names = "-i")
-    private Integer index;
-    @Parameter(names = "-m")
-    private String message;
+    @Parameter(names = "-k")
+    private String key;
+    @Parameter(names = "-v")
+    private String value;
 
     public static void main(String[] args) {
         System.out.println("Client started!");
@@ -45,9 +45,9 @@ public class Main {
     }
 
     private String buildRequest() {
-        return new Gson().toJson(new Request(type, index, message));
+        return new Gson().toJson(new Request(type, key, value));
     }
 
-    record Request(String type, int key, String value) {
+    record Request(String type, String key, String value) {
     }
 }

@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryData {
-    private static final Map<Integer, String> data = new HashMap<>();
+    private static final Map<String, String> data = new HashMap<>();
 
-    public static Map<Integer, String> getData() {
+    public static Map<String, String> getData() {
         return data;
     }
 }

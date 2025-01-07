@@ -1,24 +1,27 @@
 package server.command;
 
-import server.data.InMemoryData;
+import server.data.Response;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
-public class DeleteCommand implements Command {
-    private final String idx;
-    private final Map<Integer, String> data = InMemoryData.getData();
+public class DeleteCommand extends DataAwareCommand {
 
-    public DeleteCommand(String idx) {
-        this.idx = idx;
+    private final String key;
+
+    public DeleteCommand(DataOutputStream outputStream, String key) {
+        super(outputStream);
+        this.key = key;
     }
 
     @Override
-    public boolean execute(DataOutputStream outputStream) throws IOException {
-        var key = Integer.parseInt(this.idx);
-        data.put(key, "");
-        outputStream.writeUTF("OK");
+    public boolean execute() throws IOException {
+        var removed = data.remove(key);
+        var response = removed != null
+                ? Response.ok()
+                : Response.error("No such key");
+
+        outputStream.writeUTF(gson.toJson(response));
         return true;
     }
 }

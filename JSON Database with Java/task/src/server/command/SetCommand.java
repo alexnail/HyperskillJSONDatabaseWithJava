@@ -1,27 +1,24 @@
 package server.command;
 
-import server.data.InMemoryData;
+import server.data.Response;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
-public class SetCommand implements Command {
-    private final String idx;
+public class SetCommand extends DataAwareCommand {
+    private final String key;
     private final String text;
 
-    private final Map<Integer, String> data = InMemoryData.getData();
-
-    public SetCommand(String idx, String text) {
-        this.idx = idx;
+    public SetCommand(DataOutputStream outputStream, String key, String text) {
+        super(outputStream);
+        this.key = key;
         this.text = text;
     }
 
     @Override
-    public boolean execute(DataOutputStream outputStream) throws IOException {
-        Integer key = Integer.parseInt(idx);
+    public boolean execute() throws IOException {
         data.put(key, text);
-        outputStream.writeUTF("OK");
+        outputStream.writeUTF(gson.toJson(Response.ok()));
         return true;
     }
 }
