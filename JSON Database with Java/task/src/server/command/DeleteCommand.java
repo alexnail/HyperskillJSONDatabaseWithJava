@@ -15,14 +15,6 @@ public class DeleteCommand implements Command {
     }
 
     @Override
-    public boolean execute() {
-        var key = Integer.parseInt(this.idx);
-        data.put(key, "");
-        System.out.println("OK");
-        return true;
-    }
-
-    @Override
     public boolean execute(DataOutputStream outputStream) throws IOException {
         var key = Integer.parseInt(this.idx);
         data.put(key, "");

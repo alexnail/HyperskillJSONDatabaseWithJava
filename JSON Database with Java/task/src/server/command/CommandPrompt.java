@@ -2,7 +2,6 @@ package server.command;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Scanner;
 
 public class CommandPrompt {
 
@@ -16,9 +15,4 @@ public class CommandPrompt {
         return CommandFactory.getAndExecuteCommand(serverSocket);
     }
 
-    public Command command(){
-        try (Scanner scanner = new Scanner(System.in)) {
-            return CommandFactory.getCommand(scanner.nextLine());
-        }
-    }
 }

@@ -17,14 +17,6 @@ public class GetCommand implements Command {
     }
 
     @Override
-    public boolean execute() {
-        var key = Integer.parseInt(this.idx);
-        var data = this.data.get(key);
-        System.out.println(data == null || data.isEmpty() ? "ERROR" : data);
-        return true;
-    }
-
-    @Override
     public boolean execute(DataOutputStream outputStream) throws IOException {
         var key = Integer.parseInt(this.idx);
         var data = this.data.get(key);

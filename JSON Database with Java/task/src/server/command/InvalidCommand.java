@@ -10,12 +10,6 @@ public class InvalidCommand implements Command {
         this.msg = msg;
     }
 
-    @Override
-    public boolean execute() {
-        System.out.println(msg);
-        return true;
-    }
-
     public boolean execute(DataOutputStream outputStream) throws IOException {
         outputStream.writeUTF(msg);
         return true;
