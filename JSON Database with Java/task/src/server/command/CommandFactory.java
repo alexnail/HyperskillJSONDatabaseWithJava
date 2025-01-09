@@ -5,30 +5,33 @@ import server.data.Request;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 public class CommandFactory {
 
-    public static boolean getAndExecuteCommand(ServerSocket serverSocket) throws IOException {
-        try (var socket = serverSocket.accept();
-            var inputStream = new DataInputStream(socket.getInputStream());
-            var outputStream = new DataOutputStream(socket.getOutputStream());) {
+    public static Future<Boolean> getAndExecuteCommand(ServerSocket serverSocket, ExecutorService executorService) {
+        return executorService.submit(() -> {
+            try (var socket = serverSocket.accept();
+                 var inputStream = new DataInputStream(socket.getInputStream());
+                 var outputStream = new DataOutputStream(socket.getOutputStream());) {
 
-            var request = new Gson().fromJson(inputStream.readUTF(), Request.class);
-            var invalidCommand = isValidRequest(request, outputStream);
-            if (null != invalidCommand) {
-                return invalidCommand.execute();
+                var request = new Gson().fromJson(inputStream.readUTF(), Request.class);
+                var invalidCommand = isValidRequest(request, outputStream);
+                if (null != invalidCommand) {
+                    return invalidCommand.execute();
+                }
+
+                return switch (request.type()) {
+                    case "set" -> new SetCommand(outputStream, request.key(), request.value()).execute();
+                    case "get" -> new GetCommand(outputStream, request.key()).execute();
+                    case "delete" -> new DeleteCommand(outputStream, request.key()).execute();
+                    case "exit" -> new ExitCommand(outputStream).execute();
+                    default -> new InvalidCommand(outputStream, "Unknown command").execute();
+                };
             }
-
-            return switch (request.type()) {
-                case "set" -> new SetCommand(outputStream, request.key(), request.value()).execute();
-                case "get" -> new GetCommand(outputStream, request.key()).execute();
-                case "delete" -> new DeleteCommand(outputStream, request.key()).execute();
-                case "exit" -> new ExitCommand(outputStream).execute();
-                default -> new InvalidCommand(outputStream, "Unknown command").execute();
-            };
-        }
+        });
     }
 
     private static InvalidCommand isValidRequest(Request request, DataOutputStream outputStream) {
