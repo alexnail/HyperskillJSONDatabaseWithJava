@@ -15,6 +15,45 @@ files:
   - name: test/JsonRequestBuilder.java
     visible: false
     learner_created: false
+  - name: src/server/command/InvalidCommand.java
+    visible: true
+    learner_created: true
+  - name: src/server/data/Request.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/CommandPrompt.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/Command.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/CommandFactory.java
+    visible: true
+    learner_created: true
+  - name: src/server/data/Response.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/SetCommand.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/ExitCommand.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/BaseCommand.java
+    visible: true
+    learner_created: true
+  - name: src/server/data/InMemoryData.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/GetCommand.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/DeleteCommand.java
+    visible: true
+    learner_created: true
+  - name: src/server/command/DataAwareCommand.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5494#comment
 status: Unchecked
 record: -1
