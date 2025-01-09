@@ -17,7 +17,7 @@ public class SetCommand extends DataAwareCommand {
 
     @Override
     public boolean execute() throws IOException {
-        data.put(key, text);
+        save(key, text);
         outputStream.writeUTF(gson.toJson(Response.ok()));
         return true;
     }

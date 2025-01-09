@@ -16,7 +16,7 @@ public class DeleteCommand extends DataAwareCommand {
 
     @Override
     public boolean execute() throws IOException {
-        var removed = data.remove(key);
+        var removed = remove(key);
         var response = removed != null
                 ? Response.ok()
                 : Response.error("No such key");

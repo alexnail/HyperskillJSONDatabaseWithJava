@@ -16,7 +16,7 @@ public class GetCommand extends DataAwareCommand {
 
     @Override
     public boolean execute() throws IOException {
-        var value = data.get(key);
+        var value = get(key);
         Response response = value == null || value.isEmpty()
                 ? Response.error("No such key")
                 : Response.ok(value);
