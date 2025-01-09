@@ -11,7 +11,7 @@ import java.net.ServerSocket;
 public class CommandFactory {
 
     public static boolean getAndExecuteCommand(ServerSocket serverSocket) throws IOException {
-        try(var socket = serverSocket.accept();
+        try (var socket = serverSocket.accept();
             var inputStream = new DataInputStream(socket.getInputStream());
             var outputStream = new DataOutputStream(socket.getOutputStream());) {
 
