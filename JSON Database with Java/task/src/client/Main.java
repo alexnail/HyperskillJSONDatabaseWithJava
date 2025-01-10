@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.Duration;
 
 public class Main implements Runnable {
     private static final String ADDRESS = "127.0.0.1";
@@ -30,7 +31,7 @@ public class Main implements Runnable {
                 .parse(args);
         Thread thread = new Thread(main);
         thread.start();
-        thread.join();
+        thread.join(Duration.ofSeconds(5));
     }
 
     public void run() {

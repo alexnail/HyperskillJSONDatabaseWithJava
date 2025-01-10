@@ -17,18 +17,20 @@ public class CommandFactory {
                  var inputStream = new DataInputStream(socket.getInputStream());
                  var outputStream = new DataOutputStream(socket.getOutputStream());) {
 
-                var request = new Gson().fromJson(inputStream.readUTF(), Request.class);
+                var json = inputStream.readUTF();
+                var request = new Gson().fromJson(json, Request.class);
+
                 var invalidCommand = isValidRequest(request, outputStream);
                 if (null != invalidCommand) {
                     return invalidCommand.execute();
                 }
 
                 return switch (request.type()) {
-                    case "set" -> new SetCommand(outputStream, request.key(), request.value()).execute();
-                    case "get" -> new GetCommand(outputStream, request.key()).execute();
+                    case "set" ->    new SetCommand(outputStream, request.key(), request.value()).execute();
+                    case "get" ->    new GetCommand(outputStream, request.key()).execute();
                     case "delete" -> new DeleteCommand(outputStream, request.key()).execute();
-                    case "exit" -> new ExitCommand(outputStream).execute();
-                    default -> new InvalidCommand(outputStream, "Unknown command").execute();
+                    case "exit" ->   new ExitCommand(outputStream).execute();
+                    default ->       new InvalidCommand(outputStream, "Unknown command").execute();
                 };
             }
         });

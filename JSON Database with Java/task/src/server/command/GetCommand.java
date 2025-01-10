@@ -7,9 +7,9 @@ import java.io.IOException;
 
 public class GetCommand extends DataAwareCommand {
 
-    private final String key;
+    private final Object key;
 
-    public GetCommand(DataOutputStream outputStream, String key) {
+    public GetCommand(DataOutputStream outputStream, Object key) {
         super(outputStream);
         this.key = key;
     }
@@ -17,7 +17,7 @@ public class GetCommand extends DataAwareCommand {
     @Override
     public boolean execute() throws IOException {
         var value = get(key);
-        Response response = value == null || value.isEmpty()
+        Response response = value == null
                 ? Response.error("No such key")
                 : Response.ok(value);
         outputStream.writeUTF(gson.toJson(response));

@@ -47,7 +47,7 @@ subprojects {
     test {
         systemProperty "file.encoding", "utf-8"
         outputs.upToDateWhen { false }
-        useJUnitPlatform()
+        //useJUnitPlatform()
     }
 
     compileJava.options.encoding = 'utf-8'

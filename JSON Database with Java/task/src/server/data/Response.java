@@ -1,12 +1,12 @@
 package server.data;
 
-public record Response(String response, String value, String reason) {
+public record Response(String response, Object value, String reason) {
 
     public static Response ok() {
         return new Response("OK");
     }
 
-    public static Response ok(String value) {
+    public static Response ok(Object value) {
         return new Response("OK", value, null);
     }
 

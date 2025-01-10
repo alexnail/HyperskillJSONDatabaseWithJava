@@ -7,9 +7,9 @@ import java.io.IOException;
 
 public class DeleteCommand extends DataAwareCommand {
 
-    private final String key;
+    private final Object key;
 
-    public DeleteCommand(DataOutputStream outputStream, String key) {
+    public DeleteCommand(DataOutputStream outputStream, Object key) {
         super(outputStream);
         this.key = key;
     }

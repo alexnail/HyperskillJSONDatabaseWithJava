@@ -6,18 +6,18 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class SetCommand extends DataAwareCommand {
-    private final String key;
-    private final String text;
+    private final Object key;
+    private final Object value;
 
-    public SetCommand(DataOutputStream outputStream, String key, String text) {
+    public SetCommand(DataOutputStream outputStream, Object key, Object value) {
         super(outputStream);
         this.key = key;
-        this.text = text;
+        this.value = value;
     }
 
     @Override
     public boolean execute() throws IOException {
-        save(key, text);
+        save(key, value);
         outputStream.writeUTF(gson.toJson(Response.ok()));
         return true;
     }

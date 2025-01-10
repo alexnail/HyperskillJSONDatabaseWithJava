@@ -1,4 +1,4 @@
 package server.data;
 
-public record Request(String type, String key, String value) {
+public record Request(String type, Object key, Object value) {
 }
